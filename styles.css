@@ -553,11 +553,13 @@ ul {
 }
 
 .mvv-card {
-  background: var(--card);
-  border: 1px solid rgba(255, 255, 255, .06);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--r-lg);
   padding: 40px 28px;
-  transition: border-color .3s, transform .3s, box-shadow .3s
+  transition: all 0.3s ease;
 }
 
 .mvv-card:hover {
@@ -594,8 +596,10 @@ ul {
 }
 
 .pilar-card {
-  background: var(--card);
-  border: 1px solid rgba(255, 255, 255, .04);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-top: 3px solid var(--red);
   border-radius: 0 0 var(--r-lg) var(--r-lg);
   padding: 52px 36px;
@@ -731,9 +735,11 @@ ul {
   flex-shrink: 0;
   text-align: center;
   padding: 48px 32px;
-  background: var(--card);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: var(--r-lg);
-  border: 1px solid rgba(255, 255, 255, .06)
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .depo-avatar {
