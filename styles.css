@@ -8,9 +8,9 @@
 }
 
 :root {
-  --red: #C21F20;
-  --red-glow: rgba(194, 31, 32, .5);
-  --red-dark: #8a1516;
+  --red: #E62627;
+  --red-glow: rgba(230, 38, 39, 0.4);
+  --red-dark: #b51c1d;
   --black: #000;
   --dark: #111;
   --card: #1a1a1a;
@@ -425,7 +425,7 @@ ul {
 
 /* === SECTIONS === */
 .section {
-  padding: 7rem 0;
+  padding: 9rem 0;
   position: relative
 }
 
@@ -560,6 +560,7 @@ ul {
   border-radius: var(--r-lg);
   padding: 40px 28px;
   transition: all 0.3s ease;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.02);
 }
 
 .mvv-card:hover {
@@ -1271,7 +1272,7 @@ ul {
 
   /* --- SECTIONS --- */
   .section {
-    padding: 5rem 0
+    padding: 6rem 0
   }
 
   .section-header {
