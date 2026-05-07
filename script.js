@@ -21,9 +21,11 @@ function initNavbar() {
 function initMobileMenu() {
     const toggle = document.getElementById('navToggle');
     const links = document.getElementById('navLinks');
+    const navbar = document.getElementById('navbar');
     toggle.addEventListener('click', () => {
         const isOpen = links.classList.toggle('open');
         toggle.classList.toggle('active');
+        navbar.classList.toggle('menu-open', isOpen);
         toggle.setAttribute('aria-expanded', isOpen);
         document.body.style.overflow = isOpen ? 'hidden' : '';
     });
@@ -31,6 +33,7 @@ function initMobileMenu() {
         link.addEventListener('click', () => {
             links.classList.remove('open');
             toggle.classList.remove('active');
+            navbar.classList.remove('menu-open');
             toggle.setAttribute('aria-expanded', 'false');
             document.body.style.overflow = '';
         });

@@ -188,10 +188,14 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}ul{list-st
 
 /* === RESPONSIVE === */
 @media(max-width:768px){
+  /* --- MOBILE MENU --- */
   .nav-toggle{display:flex}
-  .nav-links{position:fixed;inset:0;background:rgba(0,0,0,.97);backdrop-filter:blur(20px);flex-direction:column;justify-content:center;align-items:center;gap:24px;opacity:0;visibility:hidden;transition:opacity var(--t),visibility var(--t);padding-top:var(--nav-h);z-index:50}
+  .navbar.menu-open{background:rgba(0,0,0,.97);backdrop-filter:blur(16px)}
+  .nav-links{position:fixed;top:var(--nav-h);left:0;right:0;bottom:0;background:rgba(0,0,0,.97);backdrop-filter:blur(20px);flex-direction:column;justify-content:center;align-items:center;gap:28px;opacity:0;visibility:hidden;transition:opacity var(--t),visibility var(--t);z-index:49}
   .nav-links.open{opacity:1;visibility:visible}
   .nav-links a{font-size:1.2rem;letter-spacing:3px}
+
+  /* --- SECTIONS --- */
   .section{padding:5rem 0}
   .section-header{margin-bottom:48px}
   .sobre-cards{grid-template-columns:1fr}
@@ -211,9 +215,12 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}ul{list-st
   .section-decor-dots{display:none}
   .hero-watermark{right:-15%;width:70vw;opacity:.05}
   .hero::before,.hero::after{display:none}
-  .carousel-wrapper{max-width:100%;padding:0}
-  .depo-card{padding:28px 20px;min-width:100%}
-  .depo-text{font-size:.92rem;line-height:1.7;margin-bottom:20px}
+
+  /* --- CAROUSEL / DEPOIMENTOS --- */
+  .carousel-wrapper{max-width:100%;overflow:hidden;padding:0 16px;box-sizing:border-box}
+  .carousel-track{width:100%}
+  .depo-card{flex:0 0 100%;min-width:100%;padding:28px 20px;box-sizing:border-box}
+  .depo-text{font-size:.92rem;line-height:1.7;margin-bottom:20px;word-wrap:break-word;overflow-wrap:break-word}
   .depo-avatar{width:56px;height:56px;margin-bottom:20px;font-size:1.1rem}
   .depo-name{font-size:1.1rem}
   .depo-role{font-size:.8rem}
@@ -227,4 +234,6 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}ul{list-st
   .btn{padding:16px 32px}
   .impacto-number{font-size:2.4rem}
   .quote-text{font-size:1rem;letter-spacing:3px}
+  .depo-card{padding:24px 16px}
+  .depo-text{font-size:.88rem}
 }
