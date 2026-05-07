@@ -13,30 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /* --- HERO ANIMATIONS (Particles & Title) --- */
 function initHeroAnimations() {
-    // 1. Split text into spans for letter-by-letter animation
-    const title = document.querySelector('.animate-letters');
-    if (title) {
-        const text = title.textContent;
-        title.innerHTML = '';
-        let charIndex = 0;
-        for (let i = 0; i < text.length; i++) {
-            const char = text[i];
-            const span = document.createElement('span');
-            if (char === ' ') {
-                span.innerHTML = '&nbsp;';
-                span.classList.add('char', 'space');
-            } else {
-                span.textContent = char;
-                span.classList.add('char');
-            }
-            // Delay: 0.8s (line drawing) + charIndex * 0.05s
-            span.style.animationDelay = (0.8 + (charIndex * 0.05)) + 's';
-            title.appendChild(span);
-            charIndex++;
-        }
-    }
-
-    // 2. Particles Canvas
+    // 1. Particles Canvas
     const canvas = document.getElementById('particlesCanvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
