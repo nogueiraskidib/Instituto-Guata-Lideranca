@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initParallax();
     initHeroAnimations();
     initCopyPix();
+    initBackToTop();
 });
 
 /* --- HERO ANIMATIONS (Particles & Title) --- */
@@ -137,7 +138,10 @@ function animateCounter(el) {
         const p = Math.min((now - start) / duration, 1);
         el.textContent = Math.floor(ease(p) * target).toLocaleString('pt-BR');
         if (p < 1) requestAnimationFrame(tick);
-        else el.textContent = target.toLocaleString('pt-BR');
+        else {
+            el.textContent = target.toLocaleString('pt-BR');
+            el.classList.add('pulse-once');
+        }
     }
     requestAnimationFrame(tick);
 }
@@ -212,5 +216,17 @@ function initCopyPix() {
             btn.classList.add('copied');
             setTimeout(() => btn.classList.remove('copied'), 2000);
         });
+    });
+}
+
+/* --- BACK TO TOP --- */
+function initBackToTop() {
+    const btn = document.getElementById('backToTop');
+    if (!btn) return;
+    window.addEventListener('scroll', () => {
+        btn.classList.toggle('visible', window.scrollY > 400);
+    }, { passive: true });
+    btn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 }
