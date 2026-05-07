@@ -248,6 +248,59 @@ ul {
   content: '';
   position: absolute;
   bottom: 20%;
+}
+
+/* --- HERO ANIMATIONS --- */
+.particles-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-animated-line {
+  height: 2px;
+  background-color: var(--primary);
+  width: 100%;
+  max-width: 120px;
+  margin: 16px auto 24px auto;
+  transform-origin: left center;
+  transform: scaleX(0);
+  animation: drawLine 0.8s ease-out forwards;
+}
+
+@keyframes drawLine {
+  to { transform: scaleX(1); }
+}
+
+.hero-title.animate-letters {
+  /* Prevent full title from showing before js splits it, if desired. Actually, JS runs fast enough, but let's hide until animation */
+}
+.hero-title .char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: charFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.hero-title .char.space {
+  width: 0.3em;
+}
+
+@keyframes charFadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-late {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: simpleFadeUp 1s ease-out 3.5s forwards;
+}
+
+@keyframes simpleFadeUp {
+  to { opacity: 1; transform: translateY(0); }
   right: -5%;
   width: 250px;
   height: 1px;

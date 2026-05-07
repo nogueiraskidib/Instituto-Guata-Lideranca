@@ -6,8 +6,85 @@ document.addEventListener('DOMContentLoaded', () => {
     initCarousel();
     initSmoothScroll();
     initParallax();
+    initAccordion();
+    initHeroAnimations();
     initCopyPix();
 });
+
+/* --- HERO ANIMATIONS (Particles & Title) --- */
+function initHeroAnimations() {
+    // 1. Split text into spans for letter-by-letter animation
+    const title = document.querySelector('.animate-letters');
+    if (title) {
+        const text = title.textContent;
+        title.innerHTML = '';
+        let charIndex = 0;
+        for (let i = 0; i < text.length; i++) {
+            const char = text[i];
+            const span = document.createElement('span');
+            if (char === ' ') {
+                span.innerHTML = '&nbsp;';
+                span.classList.add('char', 'space');
+            } else {
+                span.textContent = char;
+                span.classList.add('char');
+            }
+            // Delay: 0.8s (line drawing) + charIndex * 0.05s
+            span.style.animationDelay = (0.8 + (charIndex * 0.05)) + 's';
+            title.appendChild(span);
+            charIndex++;
+        }
+    }
+
+    // 2. Particles Canvas
+    const canvas = document.getElementById('particlesCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    
+    function resize() {
+        width = canvas.width = canvas.offsetWidth;
+        height = canvas.height = canvas.offsetHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    const particles = [];
+    const count = 40; // 30-50 particles requested
+    const colors = ['#C21F20', '#FFFFFF'];
+
+    for (let i = 0; i < count; i++) {
+        particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.5,
+            vy: (Math.random() - 0.5) * 0.5 - 0.2, // slightly upward
+            size: Math.random() * 2 + 1,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            alpha: Math.random() * 0.2 + 0.2 // 20% to 40%
+        });
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, width, height);
+        particles.forEach(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0) p.x = width;
+            if (p.x > width) p.x = 0;
+            if (p.y < 0) p.y = height;
+            if (p.y > height) p.y = 0;
+            
+            ctx.globalAlpha = p.alpha;
+            ctx.fillStyle = p.color;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+        });
+        requestAnimationFrame(draw);
+    }
+    draw();
+}
 
 /* --- NAVBAR --- */
 function initNavbar() {
