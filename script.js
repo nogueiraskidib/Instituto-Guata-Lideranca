@@ -20,25 +20,27 @@ function initHeroAnimations() {
     let width, height;
     
     function resize() {
-        width = canvas.width = canvas.offsetWidth;
-        height = canvas.height = canvas.offsetHeight;
+        width = canvas.width = canvas.offsetWidth || window.innerWidth;
+        height = canvas.height = canvas.offsetHeight || window.innerHeight;
     }
     window.addEventListener('resize', resize);
+    // Timeout added just in case CSS isn't fully resolved yet when DOMContentLoaded fires
+    setTimeout(resize, 50);
     resize();
 
     const particles = [];
-    const count = 40; // 30-50 particles requested
+    const count = 50; 
     const colors = ['#C21F20', '#FFFFFF'];
 
     for (let i = 0; i < count; i++) {
         particles.push({
-            x: Math.random() * width,
-            y: Math.random() * height,
+            x: Math.random() * (window.innerWidth || 1000),
+            y: Math.random() * (window.innerHeight || 800),
             vx: (Math.random() - 0.5) * 0.5,
             vy: (Math.random() - 0.5) * 0.5 - 0.2, // slightly upward
-            size: Math.random() * 2 + 1,
+            size: Math.random() * 3.5 + 1.5, // Made larger so they are visible
             color: colors[Math.floor(Math.random() * colors.length)],
-            alpha: Math.random() * 0.2 + 0.2 // 20% to 40%
+            alpha: Math.random() * 0.5 + 0.3 // Made more opaque (0.3 to 0.8)
         });
     }
 

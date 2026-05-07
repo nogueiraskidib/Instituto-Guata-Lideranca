@@ -208,9 +208,9 @@ ul {
 .hero-watermark {
   position: absolute;
   top: 50%;
-  right: 5%;
-  transform: translateY(-50%);
-  width: min(50vw, 480px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(60vw, 500px);
   pointer-events: none;
   z-index: 0;
   opacity: .07;
@@ -265,6 +265,7 @@ ul {
   height: 100%;
   z-index: 1;
   pointer-events: none;
+  display: block;
 }
 
 .hero-content {
