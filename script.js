@@ -115,12 +115,6 @@ function initCarousel() {
     prev.addEventListener('click', () => go(idx === 0 ? total - 1 : idx - 1));
     next.addEventListener('click', () => go(idx === total - 1 ? 0 : idx + 1));
 
-    let auto = setInterval(() => go(idx === total - 1 ? 0 : idx + 1), 5000);
-    track.addEventListener('mouseenter', () => clearInterval(auto));
-    track.addEventListener('mouseleave', () => {
-        auto = setInterval(() => go(idx === total - 1 ? 0 : idx + 1), 5000);
-    });
-
     let sx = 0;
     track.addEventListener('touchstart', e => { sx = e.changedTouches[0].screenX; }, { passive: true });
     track.addEventListener('touchend', e => {
