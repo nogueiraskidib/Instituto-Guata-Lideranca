@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initCarousel();
     initSmoothScroll();
     initParallax();
-    initAccordion();
     initHeroAnimations();
     initCopyPix();
 });
