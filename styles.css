@@ -90,11 +90,12 @@ ul {
 .nav-container {
   max-width: var(--max-w);
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 40px;
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between
+  justify-content: space-between;
+  gap: 60px;
 }
 
 .nav-logo {
@@ -102,7 +103,8 @@ ul {
   align-items: center;
   gap: 12px;
   cursor: pointer;
-  z-index: 51
+  z-index: 51;
+  flex-shrink: 0;
 }
 
 .logo-img {
@@ -126,7 +128,8 @@ ul {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 32px
+  gap: 40px;
+  flex-shrink: 0;
 }
 
 .nav-links a {
