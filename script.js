@@ -1,0 +1,164 @@
+document.addEventListener('DOMContentLoaded', () => {
+    initNavbar();
+    initMobileMenu();
+    initScrollReveal();
+    initCounters();
+    initCarousel();
+    initSmoothScroll();
+    initParallax();
+    initCopyPix();
+});
+
+/* --- NAVBAR --- */
+function initNavbar() {
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+}
+
+/* --- MOBILE MENU --- */
+function initMobileMenu() {
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => {
+        const isOpen = links.classList.toggle('open');
+        toggle.classList.toggle('active');
+        toggle.setAttribute('aria-expanded', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    links.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            links.classList.remove('open');
+            toggle.classList.remove('active');
+            toggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        });
+    });
+}
+
+/* --- SCROLL REVEAL WITH STAGGER --- */
+function initScrollReveal() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+        return;
+    }
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+/* --- COUNTERS --- */
+function initCounters() {
+    const counters = document.querySelectorAll('.impacto-number[data-target]');
+    let done = false;
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !done) {
+                done = true;
+                counters.forEach(c => animateCounter(c));
+                observer.disconnect();
+            }
+        });
+    }, { threshold: 0.3 });
+    counters.forEach(c => observer.observe(c));
+}
+
+function animateCounter(el) {
+    const target = parseInt(el.dataset.target, 10);
+    const duration = 2000;
+    const start = performance.now();
+    function ease(t) { return 1 - Math.pow(1 - t, 4); }
+    function tick(now) {
+        const p = Math.min((now - start) / duration, 1);
+        el.textContent = Math.floor(ease(p) * target).toLocaleString('pt-BR');
+        if (p < 1) requestAnimationFrame(tick);
+        else el.textContent = target.toLocaleString('pt-BR');
+    }
+    requestAnimationFrame(tick);
+}
+
+/* --- CAROUSEL --- */
+function initCarousel() {
+    const track = document.getElementById('carousel');
+    const cards = track.querySelectorAll('.depo-card');
+    const dotsBox = document.getElementById('carouselDots');
+    const prev = document.getElementById('carouselPrev');
+    const next = document.getElementById('carouselNext');
+    let idx = 0;
+    const total = cards.length;
+
+    for (let i = 0; i < total; i++) {
+        const d = document.createElement('button');
+        d.classList.add('carousel-dot');
+        d.setAttribute('aria-label', 'Depoimento ' + (i + 1));
+        if (i === 0) d.classList.add('active');
+        d.addEventListener('click', () => go(i));
+        dotsBox.appendChild(d);
+    }
+
+    function go(i) {
+        idx = i;
+        track.style.transform = 'translateX(-' + (i * 100) + '%)';
+        dotsBox.querySelectorAll('.carousel-dot').forEach((d, j) => d.classList.toggle('active', j === i));
+    }
+
+    prev.addEventListener('click', () => go(idx === 0 ? total - 1 : idx - 1));
+    next.addEventListener('click', () => go(idx === total - 1 ? 0 : idx + 1));
+
+    let auto = setInterval(() => go(idx === total - 1 ? 0 : idx + 1), 5000);
+    track.addEventListener('mouseenter', () => clearInterval(auto));
+    track.addEventListener('mouseleave', () => {
+        auto = setInterval(() => go(idx === total - 1 ? 0 : idx + 1), 5000);
+    });
+
+    let sx = 0;
+    track.addEventListener('touchstart', e => { sx = e.changedTouches[0].screenX; }, { passive: true });
+    track.addEventListener('touchend', e => {
+        const diff = sx - e.changedTouches[0].screenX;
+        if (Math.abs(diff) > 50) go(diff > 0 ? (idx === total - 1 ? 0 : idx + 1) : (idx === 0 ? total - 1 : idx - 1));
+    }, { passive: true });
+}
+
+/* --- SMOOTH SCROLL --- */
+function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', function(e) {
+            e.preventDefault();
+            const t = document.querySelector(this.getAttribute('href'));
+            if (t) window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+        });
+    });
+}
+
+/* --- PARALLAX --- */
+function initParallax() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const wm = document.querySelector('.hero-watermark');
+    if (!wm) return;
+    window.addEventListener('scroll', () => {
+        const y = window.scrollY;
+        if (y < window.innerHeight) {
+            wm.style.transform = 'translate(-50%, calc(-50% + ' + (y * 0.15) + 'px))';
+        }
+    }, { passive: true });
+}
+
+/* --- COPY PIX --- */
+function initCopyPix() {
+    const btn = document.getElementById('copyPix');
+    const key = document.getElementById('pixKey');
+    if (!btn || !key) return;
+    btn.addEventListener('click', () => {
+        navigator.clipboard.writeText(key.textContent.trim()).then(() => {
+            btn.classList.add('copied');
+            setTimeout(() => btn.classList.remove('copied'), 2000);
+        });
+    });
+}
